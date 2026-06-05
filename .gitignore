@@ -1,0 +1,32 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Caché y bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caché de herramientas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Empaquetado / build
+build/
+dist/
+*.egg-info/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Temporales de Office (Excel abierto)
+~$*.xlsx
+
+# Notas de trabajo internas
+ajustes_progreso.md
+ajustes.md
+.claude
