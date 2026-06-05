@@ -197,11 +197,6 @@ El aplicativo calcula los siguientes campos para la hoja principal y la de desce
 - **Días desde la suscripción hasta el acta de inicio** — se calcula únicamente para
   proyectos en estado *Contratado sin acta de inicio*.
 
-**Calificación desempeño en la contratación** — ya **no se calcula** durante la
-consolidación: ahora **migra de la versión anterior** de la Matriz, igual que las demás
-columnas de contexto. El equipo la edita manualmente y el aplicativo la conserva entre
-versiones.
-
 **Fórmulas en Excel** (calculadas dentro del archivo, no en Python):
 
 - *Desempeño en el cronograma (SPI)* y *Desempeño en el costo (CPI):* escala basada en el
@@ -244,6 +239,11 @@ si no, se usa la calculada.
   versiones de la Matriz.
 - La columna **MUNICIPIOS** (en las tres hojas, al final, con encabezado verde) también es
   **manual**: no migra de Gesproy y se conserva desde la versión anterior de la Matriz.
+- La **Calificación desempeño en la contratación** ya **no se calcula** en la consolidación:
+  **migra de la versión anterior** de la Matriz (el equipo la edita a mano) y se conserva entre
+  versiones.
+- La columna **FECHA EN LA QUE PASO A ESTADO PARA CIERRE** (hoja principal y Descentralizadas,
+  formato fecha) también **migra de la versión anterior**.
 """)
 
 
