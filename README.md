@@ -30,7 +30,8 @@ la información que se ingresó manualmente.
 2. Valida que cada archivo tenga las columnas y tipos de dato esperados, con mensajes de error
    en lenguaje claro que explican **cómo corregirlos en Excel**.
 3. Cruza todo por **BPIN** (código único del proyecto).
-4. Calcula indicadores de días y calificaciones de contratación en Python.
+4. Calcula los indicadores de **días** en Python (la *calificación de contratación* ya no se
+   calcula: migra de la versión anterior).
 5. Genera un Excel con tres hojas (tablas con nombre), encabezados de colores, columnas
    con formato de fecha/número y fórmulas Excel que se recalculan al abrir el archivo.
 6. Permite descargar el resultado.
@@ -92,7 +93,8 @@ dentro de cada categoría, el de **mayor VALOR SGR**:
 ### Priorización de fechas: Gesproy vs. fechas manuales
 
 Para las fechas de contratación (`FECHA APROBACIÓN PROYECTO`, `FECHA DE APERTURA DEL PRIMER PROCESO`,
-`FECHA SUSCRIPCION`, `FECHA ACTA INICIO`, `ULTIMA FECHA PAGO`):
+`FECHA DE SUSCRIPCIÓN DEL CONTRATO PRINCIPAL`, `FECHA DE SUSCRIPCIÓN DEL PRIMER CONTRATO`,
+`FECHA ACTA INICIO`, `ULTIMA FECHA PAGO`):
 
 | Situación | Resultado |
 |---|---|
@@ -104,17 +106,31 @@ Así, las fechas ingresadas a mano no se pierden mientras el proyecto avanza; cu
 finalmente las registre, se tomarán automáticamente. Al terminar, la app muestra una tabla
 con todas las fechas que se conservaron desde la versión anterior.
 
+> **Contrato principal vs. primer contrato.** `FECHA DE SUSCRIPCIÓN DEL CONTRATO PRINCIPAL` es la
+> fecha del contrato representativo elegido por BPIN (ver priorización arriba). Como ese contrato
+> puede no ser el primero que se firmó, se agrega `FECHA DE SUSCRIPCIÓN DEL PRIMER CONTRATO`, que en
+> la hoja principal se calcula como la **fecha de suscripción más temprana** entre todos los
+> contratos del BPIN en CG-cttos (`min` por BPIN, calculado antes de elegir el principal). En
+> *Descentralizadas* esta columna se conserva de la versión anterior. (La columna antes se llamaba
+> `FECHA SUSCRIPCION`; si la versión anterior aún trae ese nombre, la app lo renombra
+> automáticamente.)
+
 ### Fecha de corte
 
 Se fija automáticamente al **día 15 del mes actual**. Si la versión anterior ya tenía una fecha
 de corte para un proyecto, se conserva esa.
 
-### Columnas manuales
+### Columnas manuales y que migran de la versión anterior
 
-`RESPONSABLE CARGUE EN GESPROY` (hoja principal) y `HORIZONTE DEL PROYECTO` (Descentralizadas)
-no migran de Gesproy: se conservan tal cual entre versiones. La columna `MUNICIPIOS`
-(en las tres hojas, al final, con encabezado verde `#9BBB59`) es igualmente manual y se
-conserva desde la versión anterior.
+Algunas columnas no provienen de Gesproy: se conservan tal cual entre versiones de la Matriz.
+
+- `RESPONSABLE CARGUE EN GESPROY` (hoja principal) y `HORIZONTE DEL PROYECTO` (Descentralizadas):
+  manuales, no migran de Gesproy.
+- `MUNICIPIOS` (en las tres hojas, al final, con encabezado verde `#9BBB59`): manual.
+- `CALIFICACIÓN DESEMPEÑO EN LA CONTRATACIÓN`: **ya no se calcula** en la consolidación; ahora
+  **migra de la versión anterior** y el equipo la edita a mano.
+- `FECHA EN LA QUE PASO A ESTADO PARA CIERRE` (hoja principal y Descentralizadas, formato fecha):
+  migra de la versión anterior.
 
 ---
 
@@ -126,15 +142,20 @@ conserva desde la versión anterior.
 - *Apertura → firma del primer contrato* — *Sin contratar* con fecha de apertura.
 - *Suscripción → acta de inicio* — *Contratado sin acta de inicio*.
 
-**Calificación desempeño en la contratación** (Python): puntúa la oportunidad del proceso
-según el estado y los días transcurridos (escalas con cortes en 30/60, 120/180 días).
+**Calificación desempeño en la contratación**: **ya no se calcula** en la consolidación.
+Migra de la versión anterior de la Matriz (ver *Columnas manuales y que migran*).
 
 **Fórmulas Excel** (se recalculan al abrir el archivo, no se guardan valores fijos):
 
 - *Desempeño en el cronograma (SPI)* y *en el costo (CPI)*: escala con zona óptima entre 0.84 y 1.2.
 - *Brecha físico-financiera*: compara avance físico vs. financiero con tolerancias por nivel de avance.
-- *Calificación ejecución del proyecto*: pondera cronograma (40%), costo (20%) y brecha (40%),
-  ajustada por externalidades.
+- *Calificación ejecución del proyecto*: depende del estado del proyecto:
+  - *Contratado en ejecución*: pondera cronograma (40%), costo (20%) y brecha (40%), ajustada por
+    externalidades (×`COLUMNA APOYO 2`/100 cuando hay externalidades ≥ 1). Si el **horizonte ya
+    venció** respecto a la fecha de corte, la calificación es **0**.
+  - *Contratado sin acta de inicio*: **100** si pasaron entre 0 y 30 días entre la suscripción
+    (del primer contrato) y la fecha de corte; en otro caso **0**.
+  - Cualquier otro estado: vacío.
 - *Calificación información a tiempo* (solo hoja principal): según el día de recibo
   (día 10 = 100, 11 = 80, 12 = 50, otro = 0).
 
@@ -173,10 +194,11 @@ solo orquesta la UI y llama a los módulos.
 ### Flujo de `consolidar()`
 
 1. Filtra proyectos activos (excluye `CERRADO` y `DESAPROBADO`).
-2. Selecciona el contrato representativo por BPIN.
+2. Selecciona el contrato representativo por BPIN y calcula la fecha de suscripción del primer
+   contrato (`min` por BPIN) antes de la selección.
 3. Construye la tabla de fechas con la regla *Gesproy > manual*.
 4. Hace los joins por BPIN (proyectos + contexto + fechas + contratos + cargue).
-5. Aplica los cálculos de días y calificación.
+5. Aplica los cálculos de **días** (la calificación de contratación migra de la versión anterior).
 6. Devuelve los tres DataFrames + la lista de fechas conservadas.
 
 ---
@@ -234,5 +256,7 @@ streamlit run app_matriz_seguimiento.py --server.port $PORT --server.address 0.0
 - **Normalización de fechas:** `normalizar_fecha` convierte a `pl.Date` sin importar si el dato
   llegó como `Date`, `Datetime`, número de serie de Excel o texto (`dd/mm/yyyy` o `yyyy-mm-dd`).
 - **Compatibilidad de columnas:** la app corrige en línea el typo histórico
-  `FECHA DE INCORPORACIÓN DE RECUROS` → `…RECURSOS` y agrega columnas opcionales vacías si una
-  versión anterior no las tenía, para no romper la consolidación.
+  `FECHA DE INCORPORACIÓN DE RECUROS` → `…RECURSOS`, renombra `FECHA SUSCRIPCION` →
+  `FECHA DE SUSCRIPCIÓN DEL CONTRATO PRINCIPAL` si la versión anterior aún trae el nombre viejo, y
+  agrega columnas opcionales vacías si una versión anterior no las tenía, para no romper la
+  consolidación.

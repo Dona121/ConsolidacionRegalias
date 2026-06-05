@@ -209,10 +209,13 @@ versiones.
   por debajo de 0.38 es 0.
 - *Brecha físico-financiera:* compara avance físico y avance financiero, considera el
   estado del proyecto y aplica rangos de tolerancia según el nivel de avance.
-- *Calificación ejecución del proyecto:* pondera cronograma (40%), costo (20%) y brecha
-  físico-financiera (40%). Si hay externalidades registradas, aplica un factor de ajuste.
-  Si el proyecto sigue *Contratado en ejecución* pero su **horizonte ya venció** respecto a
-  la fecha de corte, la calificación es 0.
+- *Calificación ejecución del proyecto:* depende del estado del proyecto:
+    - *Contratado en ejecución:* pondera cronograma (40%), costo (20%) y brecha
+      físico-financiera (40%). Si hay externalidades registradas, aplica un factor de ajuste.
+      Si su **horizonte ya venció** respecto a la fecha de corte, la calificación es 0.
+    - *Contratado sin acta de inicio:* 100 si pasaron entre 0 y 30 días entre la suscripción
+      (del primer contrato) y la fecha de corte; en otro caso 0.
+    - Cualquier otro estado: vacío.
 - *Calificación información a tiempo* (solo hoja principal): evalúa el día en que se
   recibió la información solicitada (día 10 = 100 pts, día 11 = 80, día 12 = 50, otro = 0).
 
