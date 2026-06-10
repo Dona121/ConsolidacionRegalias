@@ -88,7 +88,7 @@ dentro de cada categoría, el de **mayor VALOR SGR**:
 
 1. Obra pública, Consultoría, Convenios de Cooperación, Interadministrativos
 2. Suministro, Contratos/convenios con entidades sin ánimo de lucro
-3. Cualquier otro tipo
+3. Si no está en la priorización 1 o 2, se selecciona el de mayor valor
 
 ### Priorización de fechas: Gesproy vs. fechas manuales
 
@@ -131,6 +131,8 @@ Algunas columnas no provienen de Gesproy: se conservan tal cual entre versiones 
   **migra de la versión anterior** y el equipo la edita a mano.
 - `FECHA EN LA QUE PASO A ESTADO PARA CIERRE` (hoja principal y Descentralizadas, formato fecha):
   migra de la versión anterior.
+- `ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN` (hoja principal y Descentralizadas, número decimal,
+  ubicada después de `CALIFICACIÓN EJECUCIÓN DEL PROYECTO`): migra de la versión anterior.
 
 ---
 

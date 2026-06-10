@@ -56,6 +56,8 @@ columnas_evaluacion = [
     "CALIFICACIÓN CALIDAD INFORMACIÓN",
     "COLUMNA APOYO 2",
     "CALIFICACIÓN EJECUCIÓN DEL PROYECTO",
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN",
     "COMENTARIOS CALIFICACIÓN",
     # Columnas manuales nuevas (encabezado verde)
     "RESPONSABLE CARGUE EN GESPROY",
@@ -98,6 +100,7 @@ columnas_numero_h1 = {
     "VALOR TOTAL PROYECTO", "VALOR PAGOS", "AVANCE FISICO", "AVANCE FINANCIERO",
     "CALIFICACIÓN DESEMPEÑO EN LA CONTRATACIÓN",
     "CALIFICACIÓN CALIDAD INFORMACIÓN",
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN",
 }
 
 columnas_dias_h1 = {
@@ -151,6 +154,8 @@ cols_desc_evaluacion = [
     "CALIFICACIÓN CALIDAD INFORMACIÓN",
     "COLUMNA APOYO 2",
     "CALIFICACIÓN EJECUCIÓN DEL PROYECTO",
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN",
     "COMENTARIOS CALIFICACIÓN",
     # Columna manual nueva (encabezado verde)
     "MUNICIPIOS",
@@ -182,6 +187,7 @@ columnas_fecha_desc = {
 columnas_numero_desc = {
     "VALOR SGR", "VALOR OTROS", "VALOR TOTAL",
     "AVANCE FÍSICO", "AVANCE FINANCIERO",
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN",
 }
 
 columnas_dias_desc = {

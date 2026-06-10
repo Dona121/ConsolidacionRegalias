@@ -160,6 +160,8 @@ _COLS_OPCIONALES_H1 = {
     # Ahora migra de la versión anterior (ya no se calcula en consolidación)
     "CALIFICACIÓN DESEMPEÑO EN LA CONTRATACIÓN": pl.lit(None).cast(pl.Float64),
     "CALIFICACIÓN CALIDAD INFORMACIÓN": pl.lit(None).cast(pl.Float64),
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN": pl.lit(None).cast(pl.Float64),
     # Fecha que migra de la versión anterior (estado para cierre)
     "FECHA EN LA QUE PASO A ESTADO PARA CIERRE": pl.lit(None).cast(pl.Date),
     "COMENTARIOS CALIFICACIÓN":         pl.lit("").cast(pl.String),
@@ -172,6 +174,8 @@ _COLS_OPCIONALES_H1 = {
 # migra de Gesproy; si la versión anterior no la tiene, se crea vacía).
 _COLS_OPCIONALES_DESC = {
     "HORIZONTE DEL PROYECTO": pl.lit(None).cast(pl.Date),
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN": pl.lit(None).cast(pl.Float64),
     # Fecha que migra de la versión anterior (estado para cierre)
     "FECHA EN LA QUE PASO A ESTADO PARA CIERRE": pl.lit(None).cast(pl.Date),
     # Fecha del primer contrato: en Desc migra de la versión anterior. Es
@@ -444,6 +448,8 @@ def consolidar_h1(
         pl.coalesce([pl.col("CALIFICACIÓN CALIDAD INFORMACIÓN"), pl.lit(None).cast(pl.Float64)]).alias("CALIFICACIÓN CALIDAD INFORMACIÓN"),
         pl.lit("").alias("COLUMNA APOYO 2"),
         pl.lit("").alias("CALIFICACIÓN EJECUCIÓN DEL PROYECTO"),
+        # Índice que migra de la versión anterior (ya no se calcula en consolidación)
+        pl.coalesce([pl.col("ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN"), pl.lit(None).cast(pl.Float64)]).alias("ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN"),
         pl.coalesce([pl.col("COMENTARIOS CALIFICACIÓN"), pl.lit("")]).alias("COMENTARIOS CALIFICACIÓN"),
         # Columnas manuales nuevas: si no existen, llegan como cadena vacía
         # gracias a `_completar_columnas_opcionales`.

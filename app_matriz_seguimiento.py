@@ -151,7 +151,7 @@ siguiendo este orden de prioridad:
 
 1. Obra pública, Consultoría, Convenios de Cooperación, Interadministrativos
 2. Suministro, Contratos con entidades sin ánimo de lucro
-3. Cualquier otro tipo (el de mayor valor)
+3. Si no está en la priorización 1 o 2 entonces se selecciona el de mayor valor.
 
 Dentro de cada categoría se toma el de **mayor valor SGR**.
 
@@ -244,6 +244,9 @@ si no, se usa la calculada.
   versiones.
 - La columna **FECHA EN LA QUE PASO A ESTADO PARA CIERRE** (hoja principal y Descentralizadas,
   formato fecha) también **migra de la versión anterior**.
+- La columna **ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN** (hoja principal y Descentralizadas,
+  número decimal, ubicada después de *Calificación ejecución del proyecto*) **migra de la
+  versión anterior**.
 """)
 
 

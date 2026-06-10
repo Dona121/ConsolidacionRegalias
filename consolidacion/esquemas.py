@@ -81,6 +81,8 @@ ESQUEMA_MATRIZ_H1 = {
     # Ahora migra de la versión anterior (ya no se calcula en consolidación)
     "CALIFICACIÓN DESEMPEÑO EN LA CONTRATACIÓN": ("Número", "numero"),
     "CALIFICACIÓN CALIDAD INFORMACIÓN":   ("Número", "numero"),
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN": ("Número", "numero"),
     "COMENTARIOS CALIFICACIÓN":           ("Texto",  "libre"),
     # Columna manual nueva (no migra de los informes Gesproy)
     "RESPONSABLE CARGUE EN GESPROY":      ("Texto",  "libre"),
@@ -123,6 +125,8 @@ ESQUEMA_MATRIZ_DESC = {
     "CALIFICACIÓN INFORMACIÓN A TIEMPO":         ("Número", "numero"),
     "CALIFICACIÓN CALIDAD INFORMACIÓN":          ("Número", "numero"),
     "CONTROL EXTERNALIDADES":                    ("Número", "numero"),
+    # Índice que migra de la versión anterior (número decimal)
+    "ÍNDICE DE EFICIENCIA EN LA TERMINACIÓN":    ("Número", "numero"),
     "COMENTARIOS CALIFICACIÓN":                  ("Texto",  "libre"),
     # Columna manual nueva: se conserva desde la versión anterior
     "MUNICIPIOS":                                ("Texto",  "libre"),
